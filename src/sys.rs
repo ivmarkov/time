@@ -388,8 +388,10 @@ mod inner {
                     -timezone
                 }
             };
-            #[cfg(not(any(target_os = "solaris", target_os = "illumos")))]
+            #[cfg(not(any(target_os = "solaris", target_os = "illumos", target_vendor = "espressif")))]
             let gmtoff = out.tm_gmtoff;
+            #[cfg(target_vendor = "espressif")]
+            let gmtoff = 0; // FIXME: Need to figure out the timezone offset
             tm_to_rust_tm(&out, gmtoff as i32, tm);
         }
     }
